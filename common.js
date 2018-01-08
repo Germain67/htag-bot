@@ -19,7 +19,7 @@ module.exports = {
       }
     }
   },
-  say: function(message){
+  say: function(message, args){
     if(args.length < 1){
       message.channel.send("Usage : " + config.botName + " say Write your text here");
     }

@@ -33,7 +33,7 @@ client.on("message", (message) => {
         common.choose(message, args, 5);
         break;
       case "say":
-        common.say(message);
+        common.say(message, args);
         break;
       case "play":
         youtube.play(args, client, message)
