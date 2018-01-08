@@ -1,0 +1,16 @@
+Command list
+============
+
+admin : Checks admin status
+[choose | bo5] choice1; choice2 ... [; choiceN]
+say Write your text
+
+Music
+=====
+
+play [yt_link | search]
+stop
+skip
+playing
+queue
+volume [0 - 100]

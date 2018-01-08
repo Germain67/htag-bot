@@ -1,12 +1,13 @@
 const config = require("./config.json");
 const YTDL = require('ytdl-core');
 const ytapi = require("./youtube-api.js");
+const Discord = require("discord.js");
 
 var nowplaying = {};
 var volume = {};
 var servers = {};
 
-function playSong (connection, message) {
+function playSong (client, connection, message) {
   var server = servers[message.guild.id];
 
   nowplaying[message.guild.id] = server.queue.shift();
@@ -28,7 +29,7 @@ function playSong (connection, message) {
   server.dispatcher.on("end", function () {
       nowplaying[message.guild.id] = null;
       if (server.queue.length > 0)
-          playSong(connection, message);
+          playSong(client, connection, message);
       else {
           connection.disconnect();
           server.dispatcher = null;
@@ -85,15 +86,15 @@ module.exports = {
         if (!message.guild.voiceConnection)
             message.member.voiceChannel.join().then(function (connection) {
                 if (!server.dispatcher)
-                    playSong(connection, message);
+                    playSong(client, connection, message);
             })
         else {
             if (!server.dispatcher)
-                playSong(message.guild.voiceConnection, message);
+                playSong(client, message.guild.voiceConnection, message);
         }
     });
   },
-  skip: function(){
+  skip: function(message){
     var server = servers[message.guild.id];
     if (server.dispatcher) {
         server.dispatcher.end();
