@@ -1,14 +1,14 @@
-const config = require("./config.json");
-const Discord = require("discord.js");
+const config = require('./config.json');
+const Discord = require('discord.js');
 const client = new Discord.Client();
-const common = require("./common.js");
-const youtube = require("./youtube.js");
+const common = require('./common.js');
+const youtube = require('./youtube.js');
 
-client.on("ready", () => {
-  console.log("Htag bot started");
+client.on('ready', () => {
+  console.log('Htag bot started');
 });
 
-client.on("message", (message) => {
+client.on('message', (message) => {
   //Prevent botception
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
@@ -16,41 +16,41 @@ client.on("message", (message) => {
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
-  console.log('[' + message.author.username + "] " + config.botName + ' ' + command + ' ' + args.join(' '));
+  console.log('[' + message.author.username + '] ' + config.botName + ' ' + command + ' ' + args.join(' '));
 
   try{
     switch (command) {
-      case "help":
+      case 'help':
         common.printCommandList(message);
         break;
-      case "admin":
+      case 'admin':
         message.channel.send(message.author.id == config.ownerID);
         break;
-      case "choose":
+      case 'choose':
         common.choose(message, args, 1);
         break;
-      case "bo5":
+      case 'bo5':
         common.choose(message, args, 5);
         break;
-      case "say":
-        common.say(message);
+      case 'say':
+        common.say(message, args);
         break;
-      case "play":
+      case 'play':
         youtube.play(args, client, message)
         break;
-      case "skip":
+      case 'skip':
         youtube.skip(message);
         break;
-      case "stop":
+      case 'stop':
         youtube.stop(message);
         break;
-      case "playing":
+      case 'playing':
         youtube.playing(client, message);
         break;
-      case "queue":
+      case 'queue':
         youtube.queue(client, message);
         break;
-      case "volume":
+      case 'volume':
         youtube.volume(args, client, message);
         break;
       default:

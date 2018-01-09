@@ -1,0 +1,31 @@
+{
+  "name": "htag-bot",
+  "version": "1.0.0",
+  "description": "Discord bot",
+  "main": "htag.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Germain67/htag-bot.git"
+  },
+  "keywords": [
+    "bot",
+    "discord",
+    "htag"
+  ],
+  "author": "Germain67",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Germain67/htag-bot/issues"
+  },
+  "homepage": "https://github.com/Germain67/htag-bot#readme",
+  "dependencies": {
+    "discord.js": "^11.2.1",
+    "ffmpeg-binaries": "^3.2.2",
+    "googleapis": "^23.0.0",
+    "node-opus": "^0.2.7",
+    "ytdl-core": "^0.18.7"
+  }
+}

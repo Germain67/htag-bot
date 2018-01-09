@@ -1,7 +1,7 @@
-const config = require("./config.json");
+const config = require('./config.json');
 const YTDL = require('ytdl-core');
-const ytapi = require("./youtube-api.js");
-const Discord = require("discord.js");
+const ytapi = require('./youtube-api.js');
+const Discord = require('discord.js');
 
 var nowplaying = {};
 var volume = {};
@@ -15,18 +15,18 @@ function playSong (client, connection, message) {
 
   var iconurl = client.user.avatarURL;
   var embed = new Discord.RichEmbed()
-      .setAuthor("Music", iconurl)
+      .setAuthor('Music', iconurl)
       .setColor([0, 255, 0])
-      .setDescription("**Now Playing:**\n" +
+      .setDescription('**Now Playing:**\n' +
       video.title)
       .setThumbnail(video.thumbnail)
   message.channel.send(embed); // This sends a message of the current music playing
 
-  server.dispatcher = connection.playStream(YTDL(video.url, { filter: "audioonly" })); // This will stream only the audio part of the video.
+  server.dispatcher = connection.playStream(YTDL(video.url, { filter: 'audioonly' })); // This will stream only the audio part of the video.
   if (volume[message.guild.id]) // This checks if the user have set a volume
       server.dispatcher.setVolume(volume[message.guild.id]); // This sets the volume of the stream
 
-  server.dispatcher.on("end", function () {
+  server.dispatcher.on('end', function () {
       nowplaying[message.guild.id] = null;
       if (server.queue.length > 0)
           playSong(client, connection, message);
@@ -44,14 +44,14 @@ module.exports = {
 
     if (!args[0]) {
         var embed = new Discord.RichEmbed()
-            .setAuthor("Music", iconurl)
+            .setAuthor('Music', iconurl)
             .setColor([255, 0, 0])
             .setDescription(`**Usage:** ${config.botName} play <link/search query>`)
         message.channel.send(embed);
         return;
     }
     if (!message.member.voiceChannel) {
-        message.channel.send("You must be in a voice channel");
+        message.channel.send('You must be in a voice channel');
         return;
     }
     if (!servers[message.guild.id])
@@ -74,9 +74,9 @@ module.exports = {
         if (server.dispatcher) {
             if (server.queue.length > 0) {
                 var embed = new Discord.RichEmbed()
-                    .setAuthor("Music", iconurl)
+                    .setAuthor('Music', iconurl)
                     .setColor([0, 255, 0])
-                    .setDescription("**Added to queue:**\n" +
+                    .setDescription('**Added to queue:**\n' +
                     video.title)
                     .setThumbnail(video.thumbnail)
                 message.channel.send(embed);
@@ -112,18 +112,18 @@ module.exports = {
     if (nowplaying[message.guild.id]) {
         var video = nowplaying[message.guild.id];
         var embed = new Discord.RichEmbed()
-            .setAuthor("Music", iconurl)
+            .setAuthor('Music', iconurl)
             .setColor([0, 255, 0])
-            .setDescription("**Now Playing:**\n" +
+            .setDescription('**Now Playing:**\n' +
             video.title)
             .setThumbnail(video.thumbnail)
         message.channel.send(embed);
     }
     else {
         var embed = new Discord.RichEmbed()
-            .setAuthor("Music", iconurl)
+            .setAuthor('Music', iconurl)
             .setColor([0, 255, 0])
-            .setDescription("No music is playing.")
+            .setDescription('No music is playing.')
         message.channel.send(embed);
     }
   },
@@ -135,7 +135,7 @@ module.exports = {
         var desc = `**Now Playing:**\n${video.title}\n\n`;
         for (var i = 0; i < server.queue.length; i++) {
             if (i == 0) {
-                desc = desc + "**Queue:**\n";
+                desc = desc + '**Queue:**\n';
                 desc = desc + `**${i + 1}.** ${server.queue[i].title}\n`;
             }
             else {
@@ -143,16 +143,16 @@ module.exports = {
             }
         }
         var embed = new Discord.RichEmbed()
-            .setAuthor("Music", iconurl)
+            .setAuthor('Music', iconurl)
             .setColor([0, 255, 0])
             .setDescription(desc)
         message.channel.send(embed);
     }
     else {
         var embed = new Discord.RichEmbed()
-            .setAuthor("Music", iconurl)
+            .setAuthor('Music', iconurl)
             .setColor([0, 255, 0])
-            .setDescription("No music is playing.")
+            .setDescription('No music is playing.')
         message.channel.send(embed);
     }
   },
@@ -160,7 +160,7 @@ module.exports = {
     var iconurl = client.user.avatarURL;
     if (!args[0]) {
         var embed = new Discord.RichEmbed()
-            .setAuthor("Music", iconurl)
+            .setAuthor('Music', iconurl)
             .setColor([255, 0, 0])
             .setDescription(`**Usage:** ${config.botName}volume <volume>`)
         message.channel.send(embed);
@@ -168,7 +168,7 @@ module.exports = {
     }
 
     if (args[0] < 0 || args[0] > 100) {
-        message.channel.send("Invalid Volume! Please provide a volume from 0 to 100.");
+        message.channel.send('Invalid Volume! Please provide a volume from 0 to 100.');
         return;
     }
 

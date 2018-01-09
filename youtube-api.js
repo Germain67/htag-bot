@@ -1,5 +1,5 @@
 var google = require('googleapis');
-const config = require("./config.json");
+const config = require('./config.json');
 
 module.exports = {
     getVideo: function (query) {
