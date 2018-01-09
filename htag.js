@@ -32,7 +32,7 @@ client.on('message', (message) => {
       case 'bo5':
         common.choose(message, args, 5);
         break;
-      case 'say':
+      case "say":
         common.say(message, args);
         break;
       case 'play':
