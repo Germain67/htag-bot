@@ -1,12 +1,19 @@
-const config = require('./config.json');
-var fs = require('fs');
+const env = process.env.NODE_ENV || 'dev';
+const config = require('./config/' + env + '.json');
+var help = require('./help.json');
 
 module.exports = {
   printCommandList: function(message) {
-    fs.readFile('help.txt', 'utf8', function(err, data) {
-        if (err) throw err;
-        message.author.send(data);
-    });
+    let helpStr = 'Command list\n```';
+    for (var i = 0; i < help.length; i++) {
+      helpStr += config.prefix + help[i].command;
+      for (var j = 0; j < help[i].arguments.length; j++) {
+        helpStr += ' [' + help[i].arguments[j] + ']';
+      }
+      helpStr += ' : ' + help[i].description + '\n';
+    }
+    helpStr += '```';
+    message.author.send(helpStr);
   },
   choose: function(message, args, nb) {
     const choices = args.join(' ').split(';');

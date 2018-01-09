@@ -1,5 +1,6 @@
 var google = require('googleapis');
-const config = require('./config.json');
+const env = process.env.NODE_ENV || 'dev';
+const config = require('./config/' + env + '.json');
 
 module.exports = {
     getVideo: function (query) {

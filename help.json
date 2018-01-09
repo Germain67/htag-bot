@@ -1,0 +1,5 @@
+[
+  { "command":"choose", "arguments":[ "choice1", "choice2", "choiceN" ], "description": "Randomly choose between every choices" },
+  { "command":"bo5", "arguments":[ "choice1", "choice2", "choiceN" ], "description": "Randomly choose between every choices in 5 times"  },
+  { "command":"say", "arguments":[ "text" ], "description": "The bot will say the text given in argument" }
+]

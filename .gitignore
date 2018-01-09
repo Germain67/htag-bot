@@ -58,5 +58,5 @@ typings/
 .env
 
 # Config file
-config.json
-
+*/dev.json
+*/production.json
