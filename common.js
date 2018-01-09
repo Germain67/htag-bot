@@ -5,7 +5,7 @@ module.exports = {
   printCommandList: function(message) {
     fs.readFile('help.txt', 'utf8', function(err, data) {
         if (err) throw err;
-        message.author.sendMessage(data);
+        message.author.send(data);
     });
   },
   choose: function(message, args, nb) {

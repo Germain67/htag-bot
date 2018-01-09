@@ -29,7 +29,7 @@ function playSong (client, connection, message) {
   server.dispatcher.on('end', function () {
       nowplaying[message.guild.id] = null;
       if (server.queue.length > 0)
-          playSong(client, connection, message);
+          setTimeout(function(){ playSong(client, connection, message);}, 1000);
       else {
           connection.disconnect();
           server.dispatcher = null;

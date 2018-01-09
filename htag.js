@@ -2,7 +2,7 @@ const config = require('./config.json');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const common = require('./common.js');
-const youtube = require('./youtube.js');
+//const youtube = require('./youtube.js');
 
 client.on('ready', () => {
   console.log('Htag bot started');
