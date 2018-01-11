@@ -18,15 +18,32 @@ client.on('message', (message) => {
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
-  console.log('[' + message.author.username + '] ' + config.botName + ' ' + command + ' ' + args.join(' '));
+  console.log('[' + message.author.username + '] ' + config.prefix + ' ' + command + ' ' + args.join(' '));
+
+  let deleteMsg = true;
 
   try{
     switch (command) {
       case 'help':
         common.printCommandList(message);
         break;
+      case 'karim':
+        common.sendImage(message, args, "https://cdn.discordapp.com/attachments/129515718646562817/316142794622107649/unknown.png");
+        break;
+      case 'jmspinner':
+        common.sendImage(message, args, "http://i.imgur.com/4f4dFd4.jpg");
+        break;
+      case 'jm1':
+        common.sendImage(message, args, "http://i.imgur.com/lS7Ytt0.png");
+        break;
+      case 'jm2':
+        common.sendImage(message, args, "http://i.imgur.com/iyGQo3A.jpg");
+        break;
+      case 'thinking':
+        common.sendImage(message, args, "https://cdn.discordapp.com/attachments/293119468496879617/316972585101295616/LWcZZJL.gif");
+        break;
       case 'admin':
-        message.channel.send(message.author.id == config.ownerID);
+        message.author.send(message.author.id == config.ownerID);
         break;
       case 'choose':
         common.choose(message, args, 1);
@@ -56,6 +73,10 @@ client.on('message', (message) => {
         youtube.volume(args, client, message);
         break;
       default:
+        deleteMsg = false;
+    }
+    if(deleteMsg){
+      message.delete();
     }
   }
   catch (err){

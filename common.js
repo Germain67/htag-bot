@@ -18,7 +18,7 @@ module.exports = {
   choose: function(message, args, nb) {
     const choices = args.join(' ').split(';');
     if(choices.length < 2){
-      message.channel.send('Usage : ' + config.botName + ' [choose | bo5] choice1; choice2 ... [; choiceN]');
+      message.channel.send('Usage : ' + config.prefix + '[choose | bo5] choice1; choice2 ... [; choiceN]');
     }
     else{
       for(let i = 0; i < nb; i++){
@@ -28,10 +28,20 @@ module.exports = {
   },
   say: function(message, args){
     if(args.length < 1){
-      message.channel.send('Usage : ' + config.botName + ' say Write your text here');
+      message.channel.send('Usage : ' + config.prefix + 'say Write your text here');
     }
     else{
       message.channel.send(args.join(' '));
     }
+  },
+  sendImage: function(message, args, url){
+    message.channel.send({
+      "embed": {
+        title: args.join(' '),
+        "image": {
+          "url": url,
+        }
+      }
+    });
   }
 }

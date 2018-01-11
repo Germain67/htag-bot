@@ -47,7 +47,7 @@ module.exports = {
         var embed = new Discord.RichEmbed()
             .setAuthor('Music', iconurl)
             .setColor([255, 0, 0])
-            .setDescription(`**Usage:** ${config.botName} play <link/search query>`)
+            .setDescription(`**Usage:** ${config.prefix}play <link/search query>`)
         message.channel.send(embed);
         return;
     }
@@ -163,7 +163,7 @@ module.exports = {
         var embed = new Discord.RichEmbed()
             .setAuthor('Music', iconurl)
             .setColor([255, 0, 0])
-            .setDescription(`**Usage:** ${config.botName}volume <volume>`)
+            .setDescription(`**Usage:** ${config.prefix}volume <volume>`)
         message.channel.send(embed);
         return;
     }
