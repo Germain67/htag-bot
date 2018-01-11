@@ -60,3 +60,5 @@ typings/
 # Config file
 */dev.json
 */production.json
+ecosystem.config.js
+*/ecosystem.config.js
