@@ -13,5 +13,9 @@
   { "command":"jm1", "arguments":[ "title (optional)" ], "description": "Send inspirational quote with jay aim" },
   { "command":"jm2", "arguments":[ "title (optional)" ], "description": "Send picture of 80 years old jm" },
   { "command":"jmspinner", "arguments":[ "title (optional)" ], "description": "Send a little chinese guy with a spinner he built himself" },
-  { "command":"thinking", "arguments":[ "title (optional)" ], "description": "Send thinking gif" }
+  { "command":"thinking", "arguments":[ "title (optional)" ], "description": "Send thinking gif" },
+  { "command":"initpoll", "arguments":[ "question" ], "description": "Init a poll for question" },
+  { "command":"endpoll", "arguments":[ ], "description": "End current poll" },
+  { "command":"vote", "arguments":[ " yes | no " ], "description": "Vote for current poll" },
+  { "command":"pollstatus", "arguments":[ "title (optional)" ], "description": "Get status of current poll" }
 ]

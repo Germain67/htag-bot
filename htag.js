@@ -20,8 +20,6 @@ client.on('message', (message) => {
 
   console.log('[' + message.author.username + '] ' + config.prefix + ' ' + command + ' ' + args.join(' '));
 
-  let deleteMsg = true;
-
   try{
     switch (command) {
       case 'help':
@@ -43,7 +41,7 @@ client.on('message', (message) => {
         common.sendImage(message, args, "https://cdn.discordapp.com/attachments/293119468496879617/316972585101295616/LWcZZJL.gif");
         break;
       case 'admin':
-        message.author.send(message.author.id == config.ownerID);
+        message.author.send(config.ownerIDs.includes(message.author.id));
         break;
       case 'choose':
         common.choose(message, args, 1);
@@ -72,11 +70,19 @@ client.on('message', (message) => {
       case 'volume':
         youtube.volume(args, client, message);
         break;
+      case 'initpoll':
+        common.initPoll(message, args);
+        break;
+      case 'vote':
+        common.vote(message, args);
+        break;
+      case 'pollstatus':
+        common.pollStatus(message);
+        break;
+      case 'endpoll':
+        common.endPoll(message);
+        break;
       default:
-        deleteMsg = false;
-    }
-    if(deleteMsg){
-      message.delete();
     }
   }
   catch (err){
