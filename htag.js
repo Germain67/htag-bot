@@ -38,7 +38,7 @@ client.on('message', (message) => {
         common.sendImage(message, args, "http://i.imgur.com/iyGQo3A.jpg");
         break;
       case 'approve':
-        common.createImage(message, args, "gif", "http://i.imgur.com/Imr0JW7.gif", "http://i.imgur.com/4zX3XYt.gif");
+        common.createImage(message, args, "gif", "http://i.imgur.com/dskrSTS.gif", "http://i.imgur.com/zeb3apI.gif");
         break;
       case 'thinking':
         common.sendImage(message, args, "https://cdn.discordapp.com/attachments/293119468496879617/316972585101295616/LWcZZJL.gif");

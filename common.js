@@ -43,7 +43,7 @@ module.exports = {
         "./sounds/allahu1.mp3",
         "./sounds/allahu2.mp3"
     ];
-    
+
     var soundToPlayIndex = Math.floor(Math.random() * sounds.length);
     if(message.member.voiceChannel)
     {
@@ -74,18 +74,18 @@ module.exports = {
       message.channel.send("Hum, let me guess :thinking: ");
 
       //With computeTextDash, dashes are added at the end of each line if a word is cut
-      let messageContentSplit = computeTextDash(args.join(' ').match(/.{1,17}/g), 17);
+      let messageContentSplit = computeTextDash(args.join(' ').match(/.{1,22}/g), 22);
 
       //The text is split into 4 parts of 17 char each.
       gm((Math.random()>0.50)?urlGifNotApproved:urlGifApproved)
-        .region(900,900,0,0)
+        .region(252,252,0,0)
         .gravity("Center")
-        .font("Helvetica.ttf", 70)
+        .font("Helvetica.ttf", 18)
         .fill('#000000')
-        .drawText(0, 120, messageContentSplit[0]?messageContentSplit[0]:"")
-        .drawText(0, 200, messageContentSplit[1]?messageContentSplit[1]:"")
-        .drawText(0, 280, messageContentSplit[2]?messageContentSplit[2]:"")
-        .drawText(0, 360, messageContentSplit[3]?(messageContentSplit[4]?(messageContentSplit[3]+"..."):messageContentSplit[3]):"")
+        .drawText(0, 30, messageContentSplit[0]?messageContentSplit[0]:"")
+        .drawText(0, 55, messageContentSplit[1]?messageContentSplit[1]:"")
+        .drawText(0, 80, messageContentSplit[2]?messageContentSplit[2]:"")
+        .drawText(0, 105, messageContentSplit[3]?(messageContentSplit[4]?(messageContentSplit[3]+"..."):messageContentSplit[3]):"")
         .write("./output." + fileType, function (err) {
 
           if (!err) {
