@@ -49,6 +49,9 @@ client.on('message', (message) => {
       case 'choose':
         common.choose(message, args, 1);
         break;
+      case 'speak':
+        common.speak(message);
+        break;
       case 'bo5':
         common.choose(message, args, 5);
         break;
