@@ -1,5 +1,7 @@
 const env = process.env.NODE_ENV || 'dev';
 const config = require('./config/' + env + '.json');
+const fs = require('fs-extra');
+const gm = require('gm').subClass({imageMagick: true});
 const help = require('./help.json');
 let currentPoll = null;
 
@@ -44,6 +46,49 @@ module.exports = {
         }
       }
     });
+  },
+  createImage: function(message, args, fileType, urlGifNotApproved, urlGifApproved){
+
+    if(args.join(' ') != "")
+    {
+      
+      message.channel.send("Hum, let me guess :thinking: ");
+
+      //With computeTextDash, dashes are added at the end of each line if a word is cut
+      let messageContentSplit = computeTextDash(args.join(' ').match(/.{1,17}/g), 17);
+
+      //The text is split into 4 parts of 17 char each.
+      gm((Math.random()>0.50)?urlGifNotApproved:urlGifApproved)
+        .region(900,900,0,0)
+        .gravity("Center")
+        .font("Helvetica.ttf", 70)
+        .fill('#000000')
+        .drawText(0, 120, messageContentSplit[0]?messageContentSplit[0]:"")
+        .drawText(0, 200, messageContentSplit[1]?messageContentSplit[1]:"")
+        .drawText(0, 280, messageContentSplit[2]?messageContentSplit[2]:"")
+        .drawText(0, 360, messageContentSplit[3]?(messageContentSplit[4]?(messageContentSplit[3]+"..."):messageContentSplit[3]):"")
+        .write("./output." + fileType, function (err) {
+
+          if (!err) {
+            message.channel.send('', {
+               files: [
+                   "./output." + fileType
+               ]
+           }).then(function(){
+             fs.unlinkSync('output.' + fileType); //remove the temp file
+           }).catch(function(){
+             console.log("Something went wrong while creating the file")
+           });
+          }
+          else{
+            console.log(err);
+          }
+      });
+    }
+    else
+    {
+      message.channel.send('Usage : ' + config.prefix + 'approve condition');
+    }
   },
   initPoll: function(message, args) {
     if(config.ownerIDs.includes(message.author.id)){
@@ -118,4 +163,21 @@ function makeVote(message, args, voteValue){
   else{
     message.channel.send('No poll currently running');
   }
+}
+
+function computeTextDash(textArray, itemLength)
+{
+  if(textArray[0] && textArray[0][itemLength-1] != " " && textArray[1] && textArray[1][0] != " ")
+  {
+    textArray[0] = textArray[0] + "-";
+  }
+  if(textArray[1] && textArray[1][itemLength-1] != " " && textArray[2] && textArray[2][0] != " ")
+  {
+    textArray[1] = textArray[1] + "-";
+  }
+  if(textArray[2] && textArray[2][itemLength-1] != " " && textArray[3] && textArray[3][0] != " ")
+  {
+    textArray[2] = textArray[2] + "-";
+  }
+  return textArray;
 }
