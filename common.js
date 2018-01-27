@@ -109,6 +109,50 @@ module.exports = {
       message.channel.send('Usage : ' + config.prefix + 'approve condition');
     }
   },
+  prune: function(message, args){
+
+    //let's add some reaction to this violence
+    let react = [":heart:", ":sunglasses:",":ok_hand:",":muscle:",":tools:",":shower:",":regional_indicator_s: :regional_indicator_w: :regional_indicator_a: :regional_indicator_g:"];
+
+    if (message.channel.type == 'text') {
+
+      let nbrToDelete = args.join(' ');
+
+      if(args.join(' ') != "" && isInteger(args.join(' '))){
+
+        if(nbrToDelete > 20 || nbrToDelete < 1){
+          message.channel.send('You can delete more than 1 message at least or 20 messages maximum only :open_mouth:');
+        }
+        else {
+          message.channel.send("Yes Sir " + (react[Math.floor(Math.random() * 8)])).then(function(){
+            setTimeout(function(){
+              message.channel.fetchMessages().then(messages => {
+                let deleted = 0;
+                let tmp = [];
+                let i = -1;
+
+                //build the array of messages to remove
+                messages.forEach(function(elem){
+                  if(i <= (nbrToDelete)){
+                    tmp.push(elem);
+                    i++;
+                  }
+                })
+                message.channel.bulkDelete(tmp).then(messages => console.log(`Bulk deleted messages`))
+                .catch(console.error);
+              })
+              .catch(err => {
+                console.log('Error while doing prune Delete: ' + err);
+              });
+            }, 1000);
+          });
+        }
+      }
+      else {
+        message.channel.send('Hey nigga :boy::skin-tone-5: => Usage : ' + config.prefix + 'prune number');
+      }
+    }
+  },
   initPoll: function(message, args) {
     if(config.ownerIDs.includes(message.author.id)){
       if(currentPoll == null){
@@ -199,4 +243,8 @@ function computeTextDash(textArray, itemLength)
     textArray[2] = textArray[2] + "-";
   }
   return textArray;
+}
+
+function isInteger(x) {
+    return x % 1 === 0;
 }

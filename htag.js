@@ -59,7 +59,10 @@ client.on('message', (message) => {
         common.say(message, args);
         break;
       case 'play':
-        youtube.play(args, client, message)
+        youtube.play(args, client, message);
+        break;
+      case 'prune':
+        common.prune(message, args);
         break;
       case 'skip':
         youtube.skip(message);
