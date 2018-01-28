@@ -1,47 +1,48 @@
 const env = process.env.NODE_ENV || 'dev';
-const config = require('./config/' + env + '.json');
+const config = require(`./config/${env}.json`);
 const Discord = require('discord.js');
+
 const client = new Discord.Client();
 const common = require('./common.js');
 const youtube = require('./youtube.js');
 
 client.on('ready', () => {
-  console.log('=== ' + env + ' MODE ===');
+  console.log(`=== ${env} MODE ===`);
   console.log('Htag bot ready');
 });
 
 client.on('message', (message) => {
-  //Prevent botception
+  // Prevent botception
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
-  //Extract command
+  // Extract command
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
-  console.log('[' + message.author.username + '] ' + config.prefix + ' ' + command + ' ' + args.join(' '));
+  console.log(`[${message.author.username}] ${config.prefix} ${command} ${args.join(' ')}`);
 
-  try{
+  try {
     switch (command) {
       case 'help':
         common.printCommandList(message);
         break;
       case 'karim':
-        common.sendImage(message, args, "https://cdn.discordapp.com/attachments/129515718646562817/316142794622107649/unknown.png");
+        common.sendImage(message, args, 'https://cdn.discordapp.com/attachments/129515718646562817/316142794622107649/unknown.png');
         break;
       case 'jmspinner':
-        common.sendImage(message, args, "http://i.imgur.com/4f4dFd4.jpg");
+        common.sendImage(message, args, 'http://i.imgur.com/4f4dFd4.jpg');
         break;
       case 'jm1':
-        common.sendImage(message, args, "http://i.imgur.com/lS7Ytt0.png");
+        common.sendImage(message, args, 'http://i.imgur.com/lS7Ytt0.png');
         break;
       case 'jm2':
-        common.sendImage(message, args, "http://i.imgur.com/iyGQo3A.jpg");
+        common.sendImage(message, args, 'http://i.imgur.com/iyGQo3A.jpg');
         break;
       case 'approve':
-        common.createImage(message, args, "gif", "http://i.imgur.com/dskrSTS.gif", "http://i.imgur.com/zeb3apI.gif");
+        common.createImage(message, args, 'gif', 'http://i.imgur.com/dskrSTS.gif', 'http://i.imgur.com/zeb3apI.gif');
         break;
       case 'thinking':
-        common.sendImage(message, args, "https://cdn.discordapp.com/attachments/293119468496879617/316972585101295616/LWcZZJL.gif");
+        common.sendImage(message, args, 'https://cdn.discordapp.com/attachments/293119468496879617/316972585101295616/LWcZZJL.gif');
         break;
       case 'admin':
         message.author.send(config.ownerIDs.includes(message.author.id));
@@ -55,7 +56,7 @@ client.on('message', (message) => {
       case 'bo5':
         common.choose(message, args, 5);
         break;
-      case "say":
+      case 'say':
         common.say(message, args);
         break;
       case 'play':
@@ -94,10 +95,10 @@ client.on('message', (message) => {
       default:
     }
   }
-  catch (err){
-    console.error('Error catched : ' + err);
+  catch (err) {
+    console.error(`Error catched : ${err}`);
   }
 });
 
-//Login
+// Login
 client.login(config.token);

@@ -1,0 +1,7 @@
+{
+    "extends": "airbnb",
+    "rules" : {
+      "no-plusplus" : "off",
+      "brace-style" : [2, "stroustrup"]
+    }
+}
