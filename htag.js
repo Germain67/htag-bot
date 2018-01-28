@@ -1,10 +1,10 @@
 const env = process.env.NODE_ENV || 'dev';
-const config = require('./config/${env}.json');
+const config = (env === 'dev') ? require('./config/dev.json') : require('./config/production.json');
 const Discord = require('discord.js');
-
-const client = new Discord.Client();
 const common = require('./common.js');
 const youtube = require('./youtube.js');
+
+const client = new Discord.Client();
 
 client.on('ready', () => {
   console.log(`=== ${env} MODE ===`);

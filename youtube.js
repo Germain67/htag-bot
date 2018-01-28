@@ -1,5 +1,5 @@
 const env = process.env.NODE_ENV || 'dev';
-const config = require(`./config/${env}.json`);
+const config = (env === 'dev') ? require('./config/dev.json') : require('./config/production.json');
 const YTDL = require('ytdl-core');
 const ytapi = require('./youtube-api.js');
 const Discord = require('discord.js');
@@ -65,14 +65,7 @@ module.exports = {
     }
 
     const server = servers[message.guild.id];
-    let search;
-
-    if (args[0].toLowerCase().startsWith('http')) {
-      search = args[0];
-    }
-    else {
-      search = message.content.substring(config.prefix.length + args[0].length + 1);
-    }
+    const search = args.join(' ');
 
     ytapi.getVideo(search).then((video) => {
       server.queue.push(video);
@@ -116,23 +109,14 @@ module.exports = {
   },
   playing(client, message) {
     const iconurl = client.user.avatarURL;
+    const embed = new Discord.RichEmbed()
+      .setAuthor('Music', iconurl)
+      .setColor([0, 255, 0]);
     if (nowplaying[message.guild.id]) {
       const video = nowplaying[message.guild.id];
-      var embed = new Discord.RichEmbed()
-        .setAuthor('Music', iconurl)
-        .setColor([0, 255, 0])
-        .setDescription(`**Now Playing:**\n${
-          video.title}`)
-        .setThumbnail(video.thumbnail);
-      message.channel.send(embed);
+      embed.setDescription(`**Now Playing:**\n${video.title}`).setThumbnail(video.thumbnail);
     }
-    else {
-      var embed = new Discord.RichEmbed()
-        .setAuthor('Music', iconurl)
-        .setColor([0, 255, 0])
-        .setDescription('No music is playing.');
-      message.channel.send(embed);
-    }
+    message.channel.send(embed);
   },
   queue(client, message) {
     const iconurl = client.user.avatarURL;
@@ -141,7 +125,7 @@ module.exports = {
       const server = servers[message.guild.id];
       let desc = `**Now Playing:**\n${video.title}\n\n`;
       for (let i = 0; i < server.queue.length; i++) {
-        if (i == 0) {
+        if (i === 0) {
           desc = `${desc}**Queue:**\n`;
           desc = `${desc}**${i + 1}.** ${server.queue[i].title}\n`;
         }
@@ -149,19 +133,12 @@ module.exports = {
           desc = `${desc}**${i + 1}.** ${server.queue[i].title}\n`;
         }
       }
-      var embed = new Discord.RichEmbed()
-        .setAuthor('Music', iconurl)
-        .setColor([0, 255, 0])
-        .setDescription(desc);
-      message.channel.send(embed);
     }
-    else {
-      var embed = new Discord.RichEmbed()
-        .setAuthor('Music', iconurl)
-        .setColor([0, 255, 0])
-        .setDescription('No music is playing.');
-      message.channel.send(embed);
-    }
+    const embed = new Discord.RichEmbed()
+      .setAuthor('Music', iconurl)
+      .setColor([0, 255, 0])
+      .setDescription('No music is playing.');
+    message.channel.send(embed);
   },
   volume(args, client, message) {
     const iconurl = client.user.avatarURL;

@@ -1,10 +1,49 @@
 const env = process.env.NODE_ENV || 'dev';
-const config = require(`./config/${env}.json`);
+const config = (env === 'dev') ? require('./config/dev.json') : require('./config/production.json');
 const fs = require('fs-extra');
 const gm = require('gm').subClass({ imageMagick: true });
 const help = require('./help.json');
 
 let currentPoll = null;
+
+function makeVote(message, args, voteValue) {
+  if (currentPoll != null) {
+    if (currentPoll.voters.includes(message.author.id)) {
+      message.channel.send('You already voted for this poll');
+    }
+    else {
+      if (voteValue) {
+        currentPoll.yes++;
+      }
+      else {
+        currentPoll.no++;
+      }
+      currentPoll.voters.push(message.author.id);
+      message.channel.send('You voted successfully !');
+    }
+  }
+  else {
+    message.channel.send('No poll currently running');
+  }
+}
+
+function computeTextDash(textArray, itemLength) {
+  const res = textArray;
+  if (textArray[0] && textArray[0][itemLength - 1] !== ' ' && textArray[1] && textArray[1][0] !== ' ') {
+    res[0] += '-';
+  }
+  if (textArray[1] && textArray[1][itemLength - 1] !== ' ' && textArray[2] && textArray[2][0] !== ' ') {
+    res[1] += '-';
+  }
+  if (textArray[2] && textArray[2][itemLength - 1] !== ' ' && textArray[3] && textArray[3][0] !== ' ') {
+    res[2] += '-';
+  }
+  return res;
+}
+
+function isInteger(x) {
+  return x % 1 === 0;
+}
 
 module.exports = {
   printCommandList(message) {
@@ -73,15 +112,19 @@ module.exports = {
       const messageContentSplit = computeTextDash(args.join(' ').match(/.{1,22}/g), 22);
 
       // The text is split into 4 parts of 17 char each.
-      gm((Math.random() > 0.50) ? urlGifNotApproved : urlGifApproved)
+      const drawing = gm((Math.random() > 0.50) ? urlGifNotApproved : urlGifApproved)
         .region(252, 252, 0, 0)
         .gravity('Center')
         .font('Helvetica.ttf', 18)
         .fill('#000000')
         .drawText(0, 30, messageContentSplit[0] ? messageContentSplit[0] : '')
         .drawText(0, 55, messageContentSplit[1] ? messageContentSplit[1] : '')
-        .drawText(0, 80, messageContentSplit[2] ? messageContentSplit[2] : '')
-        .drawText(0, 105, messageContentSplit[3] ? (messageContentSplit[4] ? (`${messageContentSplit[3]}...`) : messageContentSplit[3]) : '')
+        .drawText(0, 80, messageContentSplit[2] ? messageContentSplit[2] : '');
+      let msg = '';
+      if (messageContentSplit[3]) {
+        msg = (messageContentSplit[4] ? (`${messageContentSplit[3]}...`) : messageContentSplit[3]);
+      }
+      drawing.drawText(0, 105, msg)
         .write(`./output.${fileType}`, (err) => {
           if (!err) {
             message.channel.send('', {
@@ -117,21 +160,21 @@ module.exports = {
         else {
           message.channel.send(`Yes Sir ${react[Math.floor(Math.random() * 8)]}`).then(() => {
             setTimeout(() => {
-              message.channel.fetchMessages().then((messages) => {
-                const deleted = 0;
-                const tmp = [];
-                let i = -1;
-
-                // build the array of messages to remove
-                messages.forEach((elem) => {
-                  if (i <= (nbrToDelete)) {
-                    tmp.push(elem);
-                    i++;
-                  }
-                });
-                message.channel.bulkDelete(tmp).then(messages => console.log('Bulk deleted messages'))
-                  .catch(console.error);
-              })
+              message.channel.fetchMessages()
+                .then((messages) => {
+                  const tmp = [];
+                  let i = -1;
+                  // build the array of messages to remove
+                  messages.forEach((elem) => {
+                    if (i <= (nbrToDelete)) {
+                      tmp.push(elem);
+                      i++;
+                    }
+                  });
+                  message.channel.bulkDelete(tmp)
+                    .then(console.log('Bulk deleted messages'))
+                    .catch(console.error);
+                })
                 .catch((err) => {
                   console.log(`Error while doing prune Delete: ${err}`);
                 });
@@ -201,41 +244,3 @@ module.exports = {
     }
   },
 };
-
-function makeVote(message, args, voteValue) {
-  if (currentPoll != null) {
-    if (currentPoll.voters.includes(message.author.id)) {
-      message.channel.send('You already voted for this poll');
-    }
-    else {
-      if (voteValue) {
-        currentPoll.yes++;
-      }
-      else {
-        currentPoll.no++;
-      }
-      currentPoll.voters.push(message.author.id);
-      message.channel.send('You voted successfully !');
-    }
-  }
-  else {
-    message.channel.send('No poll currently running');
-  }
-}
-
-function computeTextDash(textArray, itemLength) {
-  if (textArray[0] && textArray[0][itemLength - 1] != ' ' && textArray[1] && textArray[1][0] != ' ') {
-    textArray[0] += '-';
-  }
-  if (textArray[1] && textArray[1][itemLength - 1] != ' ' && textArray[2] && textArray[2][0] != ' ') {
-    textArray[1] += '-';
-  }
-  if (textArray[2] && textArray[2][itemLength - 1] != ' ' && textArray[3] && textArray[3][0] != ' ') {
-    textArray[2] += '-';
-  }
-  return textArray;
-}
-
-function isInteger(x) {
-  return x % 1 === 0;
-}

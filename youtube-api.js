@@ -1,7 +1,6 @@
-const google = require('googleapis');
-
 const env = process.env.NODE_ENV || 'dev';
-const config = require(`./config/${env}.json`);
+const config = (env === 'dev') ? require('./config/dev.json') : require('./config/production.json');
+const google = require('googleapis');
 
 module.exports = {
   getVideo(query) {
@@ -14,10 +13,10 @@ module.exports = {
         q: query,
       }, (err, response) => {
         if (err) {
-          reject(`The API returned an error: ${err}`);
+          reject(new Error(`The API returned an error: ${err}`));
         }
-        if (response.items.length == 0) {
-          reject('No video found.');
+        if (response.items.length === 0) {
+          reject(new Error('No video found.'));
         }
         else {
           const video = {

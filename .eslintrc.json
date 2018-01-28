@@ -2,6 +2,7 @@
     "extends": "airbnb",
     "rules" : {
       "no-plusplus" : "off",
-      "brace-style" : [2, "stroustrup"]
+      "brace-style" : [2, "stroustrup"],
+      "no-console" : "off"
     }
 }
