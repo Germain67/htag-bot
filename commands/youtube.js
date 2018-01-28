@@ -1,5 +1,5 @@
 const env = process.env.NODE_ENV || 'dev';
-const config = (env === 'dev') ? require('./config/dev.json') : require('./config/production.json');
+const config = (env === 'dev') ? require('../config/dev.json') : require('../config/production.json');
 const YTDL = require('ytdl-core');
 const ytapi = require('./youtube-api.js');
 const Discord = require('discord.js');

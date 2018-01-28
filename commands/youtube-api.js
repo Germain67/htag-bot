@@ -1,5 +1,5 @@
 const env = process.env.NODE_ENV || 'dev';
-const config = (env === 'dev') ? require('./config/dev.json') : require('./config/production.json');
+const config = (env === 'dev') ? require('../config/dev.json') : require('../config/production.json');
 const google = require('googleapis');
 
 module.exports = {
