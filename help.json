@@ -1,5 +1,6 @@
 [
   { "command":"admin", "arguments": [ ], "description": "Return true if you can use admin commands" },
+  { "command":"approve", "arguments":[ "text" ], "description": "Ask Jawad to approve (or not) what you ask for" },
   { "command":"bo5", "arguments":[ "choice1", "choice2", "choiceN" ], "description": "Randomly choose between every choices in 5 times"  },
   { "command":"choose", "arguments":[ "choice1", "choice2", "choiceN" ], "description": "Randomly choose between every choices" },
   { "command":"endpoll", "arguments":[ ], "description": "End current poll" },
@@ -15,6 +16,7 @@
   { "command":"queue", "arguments":[ ], "description": "Show song(s) currently in queue" },
   { "command":"say", "arguments":[ "text" ], "description": "The bot will say the text given in argument" },
   { "command":"skip", "arguments":[ ], "description": "Skip current song" },
+  { "command":"speak", "arguments":[ ], "description": "Invite Jawad to say something" },
   { "command":"stop", "arguments":[ ], "description": "Stop music playback" },
   { "command":"thinking", "arguments":[ "title (optional)" ], "description": "Send thinking gif" },
   { "command":"volume", "arguments":[ "1-100" ], "description": "Manage bot volume" },

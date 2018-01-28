@@ -1,5 +1,5 @@
 const env = process.env.NODE_ENV || 'dev';
-const config = require(`./config/${env}.json`);
+const config = require('./config/${env}.json');
 const Discord = require('discord.js');
 
 const client = new Discord.Client();

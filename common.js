@@ -45,7 +45,7 @@ module.exports = {
     ];
 
     const soundToPlayIndex = Math.floor(Math.random() * sounds.length);
-    if (message.member.voiceChannel) {
+    if (message.member && message.member.voiceChannel) {
       message.member.voiceChannel.join().then((connection) => {
         const dispatcher = connection.playFile(sounds[soundToPlayIndex]);
         dispatcher.on('end', () => {
